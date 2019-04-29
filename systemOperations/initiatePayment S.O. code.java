@@ -1,8 +1,8 @@
 // Java code implementing the View class:
-package se.kth.ict.oodbook.design.casestudy.view;
+package se.kth.iv1350.POSsys.view;
 
-import se.kth.ict.oodbook.design.casestudy.controller.Controller;
-import se.kth.ict.oodbook.design.casestudy.model.Amount;
+import se.kth.iv1350.POSsys.controller.Controller;
+import se.kth.iv1350.POSsys.model.Amount;
 
 /**
  * This program has no view, instead, this class is a placeholder
@@ -34,22 +34,25 @@ public class View
 //________________________________________________________________________________________
 
 // Java code implementing the Sale class:
-package se.kth.ict.oodbook.design.casestudy.model;
+package se.kth.iv1350.POSsys.model;
 
-import se.kth.ict.oodbook.design.casestudy.integration.Printer;
+import se.kth.iv1350.POSsys.integration.Receipt;
+import se.kth.iv1350.POSsys.integration.CashPayment;
+import se.kth.iv1350.POSsys.integration.Printer;
 
 /**
- * Represents one particular rental transaction, where one
- * particular car is rented by one particular customer.
+ * Represents one particular sale transaction, where one
+ * particular item is set to sale by a cashier.
  */
 public class Sale
 {
     private CashPayment payment;
+    private Receipt receipt;
     
     /**
-     * This rental is paid using the specified payment.
+     * This sale item is paid using the specified payment.
      *
-     * @param payment The payment used to pay this rental.
+     * @param payment The payment used to pay this sale item.
      */
     public void initiatePayment(CashPayment payment)
     {
@@ -57,12 +60,12 @@ public class Sale
     }
     
     /**
-     * Prints a receipt for the current sale on the
+     * Prints a receipt for the current sale item on the
      * specified printer.
      */
     public void printReceipt(Printer printer)
     {
-        Receipt receipt = new Receipt(this);
+        receipt = new Receipt(this);
         printer.printReceipt(receipt);
     }
     
@@ -85,12 +88,13 @@ public class Sale
 
 //________________________________________________________________________________________
 
-// The class Receipt, after implementing the initiatePayment system operation:
 // Java code implementing the Receipt class:
-package se.kth.ict.oodbook.design.casestudy.model;
+package se.kth.iv1350.POSsys.model;
+
+import se.kth.iv1350.POSsys.model.Sale;
 
 /**
- * The receipt of a rental
+ * The receipt of a sale
  */
 public class Receipt
 {
@@ -99,7 +103,7 @@ public class Receipt
     /**
      * Creates a new instance.
      *
-     * @param rental The rental proved by this receipt.
+     * @param sale The sale proved by this receipt.
      */
     public Receipt(Sale sale)
     {
@@ -153,12 +157,13 @@ public class Receipt
 //________________________________________________________________________________________
 
 // Java code implementing the Main class:
-package se.kth.ict.oodbook.design.casestudy.startup;
+package se.kth.iv1350.POSsys.startup;
 
-import se.kth.ict.oodbook.design.casestudy.controller.Controller;
-import se.kth.ict.oodbook.design.casestudy.integration.Printer;
-import se.kth.ict.oodbook.design.casestudy.integration.RegistryCreator;
-import se.kth.ict.oodbook.design.casestudy.view.View;
+import se.kth.iv1350.POSsys.controller.Controller;
+import se.kth.iv1350.POSsys.integration.Printer;
+import se.kth.iv1350.POSsys.integration.RegistryCreator;
+import se.kth.iv1350.POSsys.view.View;
+import se.kth.iv1350.POSsys.integration.SystemCreator;
 
 /**
  * Contains the <code>main</code> method. Performs all startup of the
@@ -175,8 +180,9 @@ public class Main
     public static void main(String[] args)
     {
         RegistryCreator creator = new RegistryCreator();
+        SystemCreator sysCreator = new SystemCreator();
         Printer printer = new Printer();
-        Controller contr = new Controller(creator, printer);
+        Controller contr = new Controller(regCreator, sysCreator, printer);
         new View(contr).sampleExecution();
     }
 }
@@ -184,21 +190,45 @@ public class Main
 //________________________________________________________________________________________
 
 // Java code implementing the RegistryCreator class:
- package se.kth.ict.oodbook.design.casestudy.integration;
+package se.kth.iv1350.POSsys.integration;
+
+import se.kth.iv1350.POSsys.integration.ItemRegistry;
+import se.kth.iv1350.POSsys.integration.SaleRegistry;
+import se.kth.iv1350.POSsys.integration.DiscountRegistry;
 
 /**
  * This class is responsible for instantiating all registries.
  */
 public class RegistryCreator
 {
-    private ItemRegistry itemRegistry = new ItemRegistry();
-    private SaleRegistry saleRegistry = new SaleRegistry();
-    private DiscountRegistry discountRegistry = new DiscountRegistry();
+    private ItemRegistry itemRegistry;
+    private SaleRegistry saleRegistry;
+    private DiscountRegistry discountRegistry;
     
     /**
-     * Get the value of rentalRegistry
+     * Creates new instances
+     */
+    public RegistryCreator()
+    {
+        itemRegistry = new ItemRegistry();
+        saleRegistry = new SaleRegistry();
+        discountRegistry = new DiscountRegistry();
+    }
+    
+    /**
+     * Get the value of itemRegistry
      *
-     * @return the value of rentalRegistry
+     * @return the value of itemRegistry
+     */
+    public ItemRegistry getItemRegistry()
+    {
+        return itemRegistry;
+    }
+    
+    /**
+     * Get the value of saleRegistry
+     *
+     * @return the value of saleRegistry
      */
     public SaleRegistry getSaleRegistry()
     {
@@ -206,42 +236,35 @@ public class RegistryCreator
     }
     
     /**
-     * Get the value of carRegistry
+     * Get the value of discountRegistry
      *
-     * @return the value of carRegistry
-     */
-    public ItemRegistry getItemRegistry()
-    {
-        return itemRegistry;
-        
-    }
-    
-    /**
-     * Get the value of carRegistry
-     *
-     * @return the value of carRegistry
+     * @return the value of discountRegistry
      */
     public DiscountRegistry getDiscountRegistry()
     {
         return discountRegistry;
-        
     }
 }
+
 
 //________________________________________________________________________________________
 
 // Java code implementing the Controller class:
-package se.kth.ict.oodbook.design.casestudy.controller;
-import se.kth.ict.oodbook.design.casestudy.integration.ItemRegistry;
-import se.kth.ict.oodbook.design.casestudy.integration.Printer;
-import se.kth.ict.oodbook.design.casestudy.integration.RegistryCreator;
-import se.kth.ict.oodbook.design.casestudy.integration.SaleRegistry;
-import se.kth.ict.oodbook.design.casestudy.integration.DiscountRegistry;
-import se.kth.ict.oodbook.design.casestudy.model.CashRegister;
-import se.kth.ict.oodbook.design.casestudy.model.Amount;
-import se.kth.ict.oodbook.design.casestudy.model.CashPayment;
-import se.kth.ict.oodbook.design.casestudy.model.Sale;
-import se.kth.ict.oodbook.design.casestudy.model.Receipt;
+package se.kth.iv1350.POSsys.controller;
+
+import se.kth.iv1350.POSsys.integration.ItemRegistry;
+import se.kth.iv1350.POSsys.integration.Printer;
+import se.kth.iv1350.POSsys.integration.RegistryCreator;
+import se.kth.iv1350.POSsys.integration.SaleRegistry;
+import se.kth.iv1350.POSsys.integration.DiscountRegistry;
+import se.kth.iv1350.POSsys.integration.SystemCreator;
+import se.kth.iv1350.POSsys.integration.InventorySystem;
+import se.kth.iv1350.POSsys.integration.AccountingSystem;
+import se.kth.iv1350.POSsys.model.CashRegister;
+import se.kth.iv1350.POSsys.model.Amount;
+import se.kth.iv1350.POSsys.model.CashPayment;
+import se.kth.iv1350.POSsys.model.Sale;
+import se.kth.iv1350.POSsys.model.Receipt;
 
 /**
  * This is the application’s only controller class. All calls to the
@@ -253,46 +276,47 @@ public class Controller
     private SaleRegistry saleRegistry;
     private DiscountRegistry discountRegistry;
     private CashRegister cashRegister;
-    private Accounting accounting;
-    private Inventory inventory;
+    private AccountingSystem accountingSystem;
+    private InventorySystem inventorySystem;
     private Printer printer;
     private Sale sale;
     
     /**
      * Creates a new instance.
      *
-     * @param regCreator Used to get all classes that handle database
-     calls.
+     * @param regCreator Used to get all classes that handle database calls.
+     *
+     * @param sysCreator Used to get all classes that handle external system calls.
+     *
      * @param printer    Interface to printer.
      */
-    public Controller(RegistryCreator regCreator, Printer printer)
+    public Controller(RegistryCreator regCreator, SystemCreator sysCreator, Printer printer)
     {
         this.itemRegistry = regCreator.getItemRegistry();
         this.saleRegistry = regCreator.getSaleRegistry();
         this.discountRegistry = regCreator.getDiscountRegistry();
         this.printer = printer;
         this.cashRegister = new CashRegister();
-        this.accounting = new Accounting();
-        this.inventory = new Inventory();
-        this.sale = new sale();
+        this.accountingSystem = sysCreator.getAccountingSystem();
+        this.inventorySystem = sysCreator.getInventorySystem();
+        this.sale = sale;
     }
     
     /**
-    * Makes a payment with the given {@link Amount}. Will be added to the balance of the cashRegister.
-    * The external system will be updated, and a receipt will be created and printed by the printer.
-    * Handles rental payment. Updates the balance of the cash
-    * register where the payment was performed. Calculates
-    * change. Prints the receipt.
+    * Initiates a payment with the paid amount.
+    * Also, the external systems will be updated.
+    * This method handles sale item payment and at the end it will calculate change and
+    * print the receipt.
     *
-    * @param paidAmount The amount of money given by the customer.
+    * @param paidAmount The amount of cash paid by the customer.
     */
     public void initiatePayment(Amount paidAmount)
     {
         CashPayment payment = new CashPayment(paidAmount);
         sale.initiatePayment(payment);
         cashRegister.addPayment(payment);
-        accountingSystem.updateAccounting();
         inventorySystem.updateInventory();
+        accountingSystem.updateAccounting();
         Receipt receipt = sale.getReceipt();
         printer.printReceipt(receipt);
         System.out.println("Change after payment: " + payment.getChange().toString());
@@ -302,7 +326,9 @@ public class Controller
 //________________________________________________________________________________________
 
 // Java code implementing the CashRegister class:
- package se.kth.ict.oodbook.design.casestudy.model;
+ package se.kth.iv1350.POSsys.model;
+
+import se.kth.iv1350.POSsys.model.Amount;
 
 /**
  * Represents a cash register. There shall be one instance of
@@ -310,48 +336,47 @@ public class Controller
  */
 public class CashRegister
 {
-    public class CashRegister
+    private Amount balance;
+        
+   /**
+    * Creates a new instance of a cashregister with a balance of zero.
+    */
+    public CashRegister()
     {
-        private Amount balance;
+        this.balance = new Amount(0);
+    }
         
-        /**
-         * Creates a new instance of a cashregister with a balance of zero.
-         */
-        public CashRegister()
-        {
-            this.balance = new Amount(0);
-        }
+   /**
+    * Gets the value of balance.
+    *
+    * @return The value of balance.
+    */
+    public Amount getBalance()
+    {
+        return balance;
+    }
         
-        /**
-         * Gets the value of balance.
-         *
-         * @return The value of balance.
-         */
-        public Amount getBalance()
-        {
-            return balance;
-        }
-        
-        /**
-         * Updates the balance wth the specified payment.
-         *
-         * @param payment The amount of money that will be added to the balance of the cash register.
-         */
-        public void addPayment(CashPayment payment)
-        {
-            balance = balance.plus(payment.getTotalPrice());
-        }
+   /**
+    * Updates the balance wth the specified payment.
+    *
+    * @param payment The amount of cash that will be added to the balance from the cash register.
+    */
+    public void addPayment(CashPayment payment)
+    {
+        balance = balance.plus(payment.getTotalPrice());
     }
 }
 
 //________________________________________________________________________________________
 
 // Java code implementing the CashPayment class:
-package se.kth.ict.oodbook.design.processSale.model;
+package se.kth.iv1350.POSsys.model;
+
+import se.kth.iv1350.POSsys.model.Amount;
 
 /**
- * Represents one specific payment for one specific rental. The
- * rental is payed with cash.
+ * Represents one specific payment for one specific sale item. The
+ * sale item is payed with cash.
  */
 public class CashPayment
 {
@@ -371,9 +396,9 @@ public class CashPayment
     }
     
     /**
-     * Calculates the total cost of the specified rental.
+     * Calculates the total price of the specified sale that the item is set to.
      *
-     * @param paidRental The rental for which the customer is paying.
+     * @param paidSale The sale that the item is set to for which the customer is paying.
      *
      */
     void calculateTotalPrice(Sale paidSale)
@@ -401,28 +426,26 @@ public class CashPayment
 //________________________________________________________________________________________
 
 // Java code implementing the Printer class:
-package se.kth.ict.oodbook.design.casestudy.integration;
+package se.kth.iv1350.POSsys.integration;
 
-import se.kth.ict.oodbook.design.casestudy.model.Receipt;
+import se.kth.iv1350.POSsys.model.Receipt;
 
 /**
- * The interface to the printer, used for all printouts initiated
- * by this program.
+ * The printer is used for all printouts of receipts.
  */
 public class Printer
 {
     /**
-     * Creates an instance, represented as a printer.
+     * Creates an instance represented as a printer.
      */
     public Printer() {
         
     }
     
     /**
-     * Prints the specified receipt, this is a dummy printer and not a real one.
-     * It prints to <code>System.out</code>, instead of a printer.
+     * Prints the specified receipt.
      *
-     * @param receipt The specified receipt that will be printed.
+     * @param receipt The specified receipt that shall be printed.
      */
     public void printReceipt(Receipt receipt)
     {
@@ -433,10 +456,10 @@ public class Printer
 //________________________________________________________________________________________
 
 // Java code implementing the Amount class:
-package se.kth.ict.oodbook.design.casestudy.model;
+package se.kth.iv1350.POSsys.model;
 
 /**
- * Represents an amount of money or items
+ * Represents an amount of cash or items
  */
 public final class Amount
 {
@@ -463,9 +486,9 @@ public final class Amount
     }
     
     /**
-     * Makes the <code>Amount</code> into a <code>String</code> object.
+     * Sets the instance amount to become a string.
      *
-     * @return <code>Amount</code> as a <code>String</code>.
+     * @return amount as a string.
      */
     @Override
     public String toString()
@@ -474,54 +497,119 @@ public final class Amount
     }
     
     /**
-     * Checks if the specified amount is equal to this amount.
+     * Subtracts the specified amount instance
      *
-     * @param obj The specified amount
-     * @return <code>false</code> if it's not the same kind of object or class or
-     * amount is not the same. <code>true</code> otherwise.
+     * @param another The second specified amount
+     *
+     * @return The difference of the first amount and the second specified amount
      */
-    @Override
-    public boolean equals(Object object)
+    public Amount minus(Amount another)
     {
-        if (object == null)
-        {
-            return false;
-        }
+        return new Amount(this.amount - another.amount);
+    }
         
-        if (getClass() != object.getClass())
-        {
-            return false;
-        }
-        
-        final Amount other = (Amount) object;
-        
-        if (!Objects.equals(this.amount, other.amount))
-        {
-            return false;
-        }
-        return true;
+    /**
+     * Adds the specified amount instance
+     *
+     * @param another The second specified amount
+     *
+     * @return The sum of the first amount and the second specified amount
+     */
+    public Amount plus(Amount another)
+    {
+        return new Amount(this.amount + another.amount);
+    }
+}
+
+//________________________________________________________________________________________
+
+// Java code implementing the RegistryCreator class:
+package se.kth.iv1350.POSsys.integration;
+
+import se.kth.iv1350.POSsys.integration.AccountingSystem;
+import se.kth.iv1350.POSsys.integration.InventorySystem;
+
+/**
+ * This class is responsible for instantiating all external systems.
+ */
+public class SystemCreator
+{
+    private AccountingSystem accountingSystem;
+    private InventorySystem inventorySystem;
+    
+    /**
+     * Creates new instances
+     */
+    public SystemCreator()
+    {
+        accountingSystem = new AccountingSystem();
+        inventorySystem = new InventorySystem();
     }
     
     /**
-     * Will subtract with the specified <code>Amount</code>
+     * Get the value of accountingSystem
      *
-     * @param other The specified <code>Amount</code>
-     * @return The difference of this <code>Amount</code>
-     * with the other <code>Amount</code>
+     * @return the value of accountingSystem
      */
-    public Amount minus(Amount other)
+    public AccountingSystem getAccountingSystem()
     {
-        return new Amount(this.amount - other.amount);
-    }
+        return accountingSystem;
         
+    }
+    
     /**
-     * Will add with the specified <code>Amount</code>
+     * Get the value of inventorySystem
      *
-     * @param other The specified <code>Amount</code>
-     * @return The sum of this <code>Amount</code> with the other <code>Amount</code>
+     * @return the value of inventorySystem
      */
-    public Amount plus(Amount other)
+    public InventorySystem getInventorySystem()
     {
-        return new Amount(this.amount + other.amount);
+        return inventorySystem;
+    }
+}
+
+//________________________________________________________________________________________
+
+// Java code implementing the InventorySystem class:
+package se.kth.iv1350.POSsys.model;
+
+/**
+ * Contains all the sale information inside
+ * the inventory system in the database.
+ */
+public class InventorySystem
+{
+    InventorySystem() {
+        
+    }
+    
+    /**
+     * Updates the inventory system.
+     */
+    public void updateInventorySystem() {
+        
+    }
+}
+
+//________________________________________________________________________________________
+
+// Java code implementing the AccountingSystem class:
+package se.kth.iv1350.POSsys.model;
+
+/**
+ * Contains all the sale information inside the
+ * accounting system (for accounting) in the database.
+ */
+public class AccountingSystem
+{
+    AccountingSystem() {
+        
+    }
+    
+    /**
+     * Updates the accounting system.
+     */
+    public void updateAccountingSystem() {
+        
     }
 }
