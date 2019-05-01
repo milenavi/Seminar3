@@ -20,14 +20,14 @@ public class DiscountRegistry
      * @return The price after the calculation of sales item price with requested discount.
      * @throws java.lang.ArgumentException
      */
-    public Discount getPriceAfterDiscount(CustomerDTO customer)
+    public double getPriceAfterDiscount(CustomerDTO customer)
             throws java.lang.ArgumentException
     {
         if (customer.getID() < 0)
             throw new ArgumentException("Given customer ID not found." + " Customer ID: " + customer.getID());
         
         // Testing price calculation and calling calculatePriceWithDiscount method.
-        return calculatePriceWithDiscount(this.item);
+         return calculatePriceWithDiscount(this.item);
     }
     
     /**
@@ -35,7 +35,7 @@ public class DiscountRegistry
      *
      * @param item The item that the customer is buying and the cashier is recording.
      */
-    public void calculatePriceWithDiscount(ItemDTO item)
+    public double calculatePriceWithDiscount(ItemDTO item)
     {
         final double TEN_PERCENT_DISCOUNT = 0.10;
         final double TWENTY_PERCENT_DISCOUNT = 0.20;
@@ -43,14 +43,17 @@ public class DiscountRegistry
         
         double totalPrice;
         double discountPrice = 0;
-        Amount amountOfItems = item.getAmount();
-        double itemPrice = item.getPrice();
+        double amountOfItems = item.getAmount().getAmount();
+        double itemPrice = item.getPrice().getAmount();
+        Amount fifty = new Amount(50);
+        Amount hundredFifty = new Amount(150);
+        Amount twoHundred = new Amount(200);
         
         int discountPercentIndex = 3;
         switch(discountPercentIndex)
         {
             case 1:
-                if(itemPrice < 49.99);
+                if(itemPrice == 49.99);
                 discountPrice = (itemPrice * TEN_PERCENT_DISCOUNT);
                 break;
                 
@@ -69,6 +72,6 @@ public class DiscountRegistry
         totalPrice = salesItemPrice * amountOfItems;
         System.out.println("Item Price:  " + itemPrice + " Discounted Price:  " + discountPrice + " Amount of items:  " + amountOfItems + " Total Price:  " + totalPrice);
         
-        return;
+        return salesItemPrice;
     }
 }

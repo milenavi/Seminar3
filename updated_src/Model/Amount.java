@@ -10,24 +10,24 @@ package Model;
  */
 public class Amount
 {
-    private int amount;
+    private final double amount;
     
     /**
      * Creates an instance, representing the specified amount.
      *
      * @param amount The amount represented by the newly created instance.
      */
-    public Amount(int amount)
+    public Amount(double amount)
     {
         this.amount = amount;
     }
-    
+
     /**
      * Get the value of amount.
      *
      * @return The value of amount.
      */
-    public int getAmount()
+    public double getAmount()
     {
         return amount;
     }
@@ -40,7 +40,7 @@ public class Amount
     @Override
     public String toString()
     {
-        return Integer.toString(amount);
+        return Integer.toString((int) amount);
     }
     
     /**

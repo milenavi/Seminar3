@@ -1,7 +1,7 @@
 package View;
 
-import Controller.Controller;
-import Integration.ItemDTO;
+import Controller1.Controller;
+import Model.ItemDTO;
 import Model.Amount;
 
 /**
@@ -11,9 +11,7 @@ import Model.Amount;
 public class View
 {
     private final Controller contr;
-    private final Amount twoAmountOfItems = new Amount(2);
-    private final Amount oneAmountOfItems = new Amount(1);
-    private final Amount eightAmountOfItems = new Amount(8);
+    private ItemDTO item;
     
     /**
      * Creates a new instance.
@@ -42,12 +40,14 @@ public class View
     public void sampleExecution()
     {
         System.out.println("Item is recorded. \n");
-        System.out.println(contr.recordItem(1004021, twoAmountOfItems, 9.99));
+        Amount amount = new Amount(2);
+        double twoItems = amount.getAmount();
+        System.out.println(contr.recordItem(1004021, new Amount(2), twoItems));
         
-        ItemDTO invalidItem = new ItemDTO(2004022, oneAmountOfItems, 0.0);
+        ItemDTO invalidItem = new ItemDTO(2004022, new Amount(2), new Amount(0));
 
         ItemDTO validItem;
-        validItem = new ItemDTO(3004024, eightAmountOfItems, 14.99);
+        validItem = new ItemDTO(3004024, new Amount(8), new Amount(10));
 
         ItemDTO recordedItem = contr.recordItem(invalidItem);
         System.out.println("Result of recording an invalid item: " + recordedItem);
@@ -56,7 +56,8 @@ public class View
         System.out.println("Result of recording a valid item: " + recordedItem);
 
         Amount paidAmount = new Amount(250);
-        System.out.println("Cashier enters the paid amount from the customer inside the program. " + contr.initiatePayment(paidAmount));
+        System.out.println("Cashier enters the paid amount from the customer inside the program. ");
+        contr.initiatePayment(paidAmount);
     }
 }
 

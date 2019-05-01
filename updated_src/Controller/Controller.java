@@ -12,7 +12,6 @@ import Model.CashRegister;
 import Model.Amount;
 import Model.CashPayment;
 import Model.Sale;
-import Model.Discount;
 import Model.Receipt;
 import Model.ItemDTO;
 import Model.CustomerDTO;
@@ -24,14 +23,13 @@ import Model.CustomerDTO;
 public class Controller
 {
     private Sale sale;
-    private DiscountRegistry discountRegistry;
-    private ItemRegistry itemRegistry;
-    private SaleRegistry saleRegistry;
-    private Printer printer;
-    private CashRegister cashRegister;
-    private AccountingSystem accountingSystem;
-    private InventorySystem inventorySystem;
-    private Discount discount;
+    private final DiscountRegistry discountRegistry;
+    private final ItemRegistry itemRegistry;
+    private final SaleRegistry saleRegistry;
+    private final Printer printer;
+    private final CashRegister cashRegister;
+    private final AccountingSystem accountingSystem;
+    private final InventorySystem inventorySystem;
     private ItemDTO item;
     
     /**
@@ -53,7 +51,6 @@ public class Controller
         this.accountingSystem = sysCreator.getAccountingSystem();
         this.inventorySystem = sysCreator.getInventorySystem();
         this.sale = sale;
-        this.discount = discount;
         this.item = item;
     }
     
@@ -62,7 +59,7 @@ public class Controller
      */
     public void startNewSale()
     {
-        this.sale = new Sale();
+        this.sale = new Sale(item, itemRegistry);
     }
     
     /**
@@ -103,7 +100,7 @@ public class Controller
     public void recordItemWithDiscount(CustomerDTO customer) 
             throws ArgumentException
     {
-        Discount discount = discountRegistry.getPriceAfterDiscount(customer);
+        double discount = discountRegistry.getPriceAfterDiscount(customer);
         sale.saveDiscount(discount);
     }
     
@@ -132,11 +129,15 @@ public class Controller
         CashPayment payment = new CashPayment(paidAmount);
         sale.initiatePayment(payment);
         cashRegister.addPayment(payment);
-        inventorySystem.updateInventory();
-        accountingSystem.updateAccounting();
+        //inventorySystem.updateInventory();
+        //accountingSystem.updateAccounting();
         Receipt receipt = sale.getReceipt();
         printer.printReceipt(receipt);
         System.out.println("Change after payment: " + payment.getChange().toString());
+    }
+
+    public boolean recordItem(int i, Amount amount, double d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

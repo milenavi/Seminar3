@@ -1,6 +1,6 @@
 package Startup;
 
-import Controller.Controller;
+import Controller1.Controller;
 import Integration.RegistryCreator;
 import Integration.SystemCreator;
 import Integration.Printer;

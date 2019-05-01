@@ -26,7 +26,7 @@ public class Discount
     }
     
     /**
-     * Sets the item to disocunt.
+     * Sets the item to discount.
      *
      * @param discountedItem The item that was discounted.
      *

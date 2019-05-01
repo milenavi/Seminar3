@@ -53,9 +53,9 @@ public class ItemRegistry
     
     private void addItems()
     {
-        items.add(new ItemDTO(1004021, twoAmountOfItems, 129.99));
-        items.add(new ItemDTO(2004202, oneAmountOfItems, 249.99));
-        items.add(new ItemDTO(3004204, eightAmountOfItems, 12.99));
+        items.add(new ItemDTO(1004021, twoAmountOfItems, new Amount(2)));
+        items.add(new ItemDTO(2004202, oneAmountOfItems, new Amount(1)));
+        items.add(new ItemDTO(3004204, eightAmountOfItems, new Amount(8)));
     }
     
     /**
@@ -98,7 +98,7 @@ public class ItemRegistry
         {
             return false;
         }
-        if (itemToRecord.getPrice() != 0 && itemToRecord.getPrice() != afterItemRecord.price)
+        if (itemToRecord.getPrice() != null && !itemToRecord.getPrice().equals(afterItemRecord.price))
         {
             return false;
         }
@@ -109,13 +109,17 @@ public class ItemRegistry
     {
         private int id;
         private Amount amount;
-        private double price;
+        private Amount price;
         
-        public SalesLineItem(int id, Amount amount, double price)
+        public SalesLineItem(int id, Amount amount, Amount price)
         {
             this.id = id;
             this.amount = amount;
             this.price = price;
+        }
+
+        private void add() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 }

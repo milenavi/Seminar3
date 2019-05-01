@@ -12,7 +12,7 @@ public final class ItemDTO
 {
     private final int id;
     private final Amount amount;
-    private final double price;
+    private final Amount price;
     
     /**
      * Creates a new instance representing a particular item.
@@ -23,7 +23,7 @@ public final class ItemDTO
      *
      * @param price A price of an item.
      */
-    public ItemDTO(int id, Amount amount, double price)
+    public ItemDTO(int id, Amount amount, Amount price)
     {
         this.id = id;
         this.amount = amount;
@@ -50,7 +50,7 @@ public final class ItemDTO
         {
             return false;
         }
-        if (recorded.getPrice() != 0 && recorded.getPrice() != price)
+        if (recorded.getPrice() != null && !recorded.getPrice().equals(price))
         {
             return false;
         }
@@ -99,8 +99,12 @@ public final class ItemDTO
      *
      * @return the price of an item
      */
-    public double getPrice()
+    public Amount getPrice()
     {
         return price;
+    }
+
+    Object getItemInformation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

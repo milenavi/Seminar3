@@ -44,11 +44,9 @@ public class Receipt
         endSection(builder);
         
         builder.append("Item for sale: ");
-        appendLine(builder, item.getItemInformation().getID());
         builder.append("Amount of items: ");
-        appendLine(builder, item.getItemInformation().getAmount());
         builder.append("Price for the item: ");
-        appendLine(builder, item.getItemInformation().getPrice());
+        appendLine(builder, item.toString());
         builder.append("Total price: ");
         appendLine(builder, sale.getPayment().getTotalPrice().toString());
         builder.append("Change after payment: ");
