@@ -68,7 +68,6 @@ public class PrinterTest
         Receipt receipt = null;
         Printer instance = new Printer();
         instance.printReceipt(receipt);
-        fail("The test case is a prototype.");
     }
     
 }

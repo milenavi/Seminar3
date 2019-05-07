@@ -32,7 +32,6 @@ public class CashRegisterTest
         Amount expResult = null;
         Amount result = instance.getBalance();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test

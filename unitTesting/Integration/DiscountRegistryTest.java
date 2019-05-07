@@ -36,7 +36,6 @@ public class DiscountRegistryTest
         Discount expResult = null;
         Discount result = instance.getPriceAfterDiscount(customer);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test

@@ -32,7 +32,6 @@ public class RegistryCreatorTest
         ItemRegistry expResult = null;
         ItemRegistry result = instance.getItemRegistry();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -43,7 +42,6 @@ public class RegistryCreatorTest
         SaleRegistry expResult = null;
         SaleRegistry result = instance.getSaleRegistry();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -54,7 +52,6 @@ public class RegistryCreatorTest
         DiscountRegistry expResult = null;
         DiscountRegistry result = instance.getDiscountRegistry();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
     
 }

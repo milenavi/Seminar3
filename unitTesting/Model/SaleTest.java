@@ -32,7 +32,6 @@ public class SaleTest
         ItemDTO salesLineItem = null;
         Sale instance = null;
         instance.addSalesLineItem(salesLineItem);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -42,7 +41,6 @@ public class SaleTest
         ItemDTO itemForSale = null;
         Sale instance = null;
         instance.setItemForSale(itemForSale);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -53,7 +51,6 @@ public class SaleTest
         ItemDTO expResult = null;
         ItemDTO result = instance.getItemForSale();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -63,7 +60,6 @@ public class SaleTest
         Discount discount = null;
         Sale instance = null;
         instance.saveDiscount(discount);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -73,7 +69,6 @@ public class SaleTest
         CashPayment payment = null;
         Sale instance = null;
         instance.initiatePayment(payment);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -83,7 +78,6 @@ public class SaleTest
         Printer printer = null;
         Sale instance = null;
         instance.printReceipt(printer);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -94,7 +88,6 @@ public class SaleTest
         Receipt expResult = null;
         Receipt result = instance.getReceipt();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -105,7 +98,6 @@ public class SaleTest
         CashPayment expResult = null;
         CashPayment result = instance.getPayment();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
     
 }

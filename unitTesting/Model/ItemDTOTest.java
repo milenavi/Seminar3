@@ -33,7 +33,6 @@ public class ItemDTOTest
         boolean expResult = false;
         boolean result = instance.matches(recorded);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -56,7 +55,6 @@ public class ItemDTOTest
         int expResult = 0;
         int result = instance.getID();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -67,7 +65,6 @@ public class ItemDTOTest
         Amount expResult = null;
         Amount result = instance.getAmount();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -78,7 +75,6 @@ public class ItemDTOTest
         double expResult = 0.0;
         double result = instance.getPrice();
         assertEquals(expResult, result, 0.0);
-        fail("The test case is a prototype.");
     }
     
 }

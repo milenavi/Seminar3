@@ -52,7 +52,6 @@ public class ControllerTest
         System.out.println("startNewSale");
         Controller instance = null;
         instance.startNewSale();
-        fail("The test case is a prototype.");
     }
 
     @Test

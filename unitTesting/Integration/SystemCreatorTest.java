@@ -32,7 +32,6 @@ public class SystemCreatorTest
         AccountingSystem expResult = null;
         AccountingSystem result = instance.getAccountingSystem();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -43,7 +42,6 @@ public class SystemCreatorTest
         InventorySystem expResult = null;
         InventorySystem result = instance.getInventorySystem();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
     
 }

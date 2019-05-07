@@ -30,7 +30,6 @@ public class InventorySystemTest
         System.out.println("updateInventorySystem");
         InventorySystem instance = new InventorySystem();
         instance.updateInventorySystem();
-        fail("The test case is a prototype.");
     }
     
 }

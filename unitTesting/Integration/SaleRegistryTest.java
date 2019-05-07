@@ -32,7 +32,6 @@ public class SaleRegistryTest
         Sale sale = null;
         SaleRegistry instance = new SaleRegistry();
         instance.saveSale(sale);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -42,7 +41,6 @@ public class SaleRegistryTest
         Sale sale = null;
         SaleRegistry instance = new SaleRegistry();
         instance.setSaleComplete(sale);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -53,7 +51,6 @@ public class SaleRegistryTest
         boolean expResult = false;
         boolean result = instance.completeSale();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
     
 }

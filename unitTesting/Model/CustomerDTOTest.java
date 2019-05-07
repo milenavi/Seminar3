@@ -32,7 +32,6 @@ public class CustomerDTOTest
         int expResult = 0;
         int result = instance.getID();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
     
 }

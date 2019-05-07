@@ -47,7 +47,6 @@ public class ItemRegistryTest
         ItemDTO expResult = null;
         ItemDTO result = instance.getItemInformation(recordedItem);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -57,7 +56,6 @@ public class ItemRegistryTest
         ItemDTO recordedItem = null;
         ItemRegistry instance = new ItemRegistry();
         instance.setIncreasedAmountOfSoldItem(recordedItem);
-        fail("The test case is a prototype.");
     }
     
     @Test

@@ -31,7 +31,6 @@ public class CashPaymentTest
         Sale paidSale = null;
         CashPayment instance = null;
         instance.calculateTotalPrice(paidSale);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -42,7 +41,6 @@ public class CashPaymentTest
         Amount expResult = null;
         Amount result = instance.getTotalPrice();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test

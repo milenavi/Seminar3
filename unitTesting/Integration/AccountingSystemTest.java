@@ -30,7 +30,6 @@ public class AccountingSystemTest
         System.out.println("updateAccountingSystem");
         AccountingSystem instance = new AccountingSystem();
         instance.updateAccountingSystem();
-        fail("The test case is a prototype.");
     }
     
 }

@@ -32,7 +32,6 @@ public class AmountTest
         int expResult = 0;
         int result = instance.getAmount();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
@@ -43,7 +42,6 @@ public class AmountTest
         String expResult = "";
         String result = instance.toString();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
